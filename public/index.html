@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Deepdarshan Sangeetha Vidhyalayam — Preserving Indian classical music through the art of flute." />
+  <title>Deepdarshan Sangeetha Vidhyalayam</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Header / Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Deepdarshan Sangeetha Vidhyalayam</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#works">Works</a></li>
+        <li class="nav-item"><a class="nav-link" href="#gurukulam">Vidhyalayam</a></li>
+        <li class="nav-item"><a class="nav-link" href="#donate">Donate</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Floating Music Button -->
+<button id="musicBtn" class="music-btn" aria-label="Listen to JP's Flute">🎶 Listen to Kannan's Flute</button>
+
+<!-- Hero Section -->
+<header class="hero fadein text-center py-5">
+  <h1>Deepdarshan Sangeetha Vidhyalayam</h1>
+  <p>Experience the timeless beauty of Indian classical music with <strong>Kannan Jayaprakash</strong>.</p>
+</header>
+
+<!-- About Section -->
+<section id="about" class="fadein py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">About Kannan Jayaprakash</h2>
+    <div class="text-center mb-3">
+      <img src="images/jp-flute.png" alt="Kannan Jayaprakash playing the flute" class="img-fluid rounded" style="max-width:250px;">
+      <p class="caption mt-2">Kannan Jayaprakash, the flute teacher</p>
+    </div>
+    <p><strong>Kannan Jayaprakash</strong> is a renowned flutist and music educator from Coimbatore, Tamil Nadu, with over 20 years of experience in Indian classical Hindustani flute music and Western music.</p>
+    <p>He blends tradition with innovation—merging Carnatic heritage with modern melodies, film tunes, and devotional music. His performances reflect both deep classical roots and creative versatility.</p>
+    <p>As the founder of Deep Darshan Flute Melodies, he dedicates his life to teaching and preserving this art form. His teaching style combines traditional techniques with creative, easy-to-learn methods, nurturing new generations of flutists.</p>
+  </div>
+</section>
+
+<!-- Works Section -->
+<section id="works" class="fadein py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4">Contributions & Works</h2>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Composer & lyricist of <em>“adikadi unna na paakanum”</em> and <em>"ye.. ye.. kannama"</em>.</li>
+      <li class="list-group-item">Created albums for <em>“Flute Meditations”</em>.</li>
+      <li class="list-group-item">Organized workshops and concerts for young musicians.</li>
+      <li class="list-group-item">Collaborated with artists, bridging Eastern & Western music traditions.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Gurukulam Vision Section -->
+<section id="gurukulam" class="fadein py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">The Sangeetha Vidhyalayam Vision</h2>
+    <p>We aim to create a vibrant and inclusive space where students can master the art of music — both vocal and instrumental — blending traditional values with creative modern methods.</p>
+
+    <!-- ✅ Updated Gurukulam Carousel -->
+    <div id="gurukulamCarousel" class="carousel slide carousel-fade my-4" data-bs-ride="carousel" data-bs-interval="2500">
+      <div class="carousel-inner">
+        <div class="carousel-item active"><img src="images/gurukulam1.jpg" class="d-block w-100" alt="Gurukulam 1"></div>
+        <div class="carousel-item"><img src="images/gurukulam2.jpg" class="d-block w-100" alt="Gurukulam 2"></div>
+        <div class="carousel-item"><img src="images/gurukulam3.jpg" class="d-block w-100" alt="Gurukulam 3"></div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#gurukulamCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#gurukulamCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <h3>Your Support Enables</h3>
+    <ul>
+      <li>Building classrooms & practice halls</li>
+      <li>Providing instruments & maintenance</li>
+      <li>Organizing performances & community workshops</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Donation Section -->
+<section id="donate" class="fadein py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4">Support the Deepdarshan Sangeetha Vidhyalayam</h2>
+    <p class="text-center">Your donation helps preserve Indian classical music and train the next generation of artists.</p>
+
+    <div class="text-center mb-3">
+      <label for="customAmt">Custom amount (₹): </label>
+      <input id="customAmt" type="number" min="1" placeholder="Enter amount" />
+    </div>
+
+    <div id="paypal-button-container" class="text-center"></div>
+    <div class="status text-center mt-3" id="status"></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-4 mt-5">
+  <div class="container text-center">
+    <p>&copy; 2025 Deepdarshan Vidhyalayam Mandhir. All rights reserved.</p>
+    <p>
+      Contact: 
+      <a href="mailto:deepdarshansangeethavidhyalaya@gmail.com" class="text-light">deepdarshansangeethavidhyalaya@gmail.com</a> |
+      <a href="tel:+919677688266" class="text-light">+91 96776 88266</a>
+    </p>
+    <p>Follow us:
+      <a href="https://www.facebook.com/KannanJayaprakashflute/" class="text-light mx-1">Facebook</a> |
+      <a href="https://www.instagram.com/kannan.jayaprakash1/" class="text-light mx-1">Instagram</a> |
+      <a href="https://youtube.com/@flutemusickannanjayaprakash" class="text-light mx-1">YouTube</a>
+    </p>
+  </div>
+</footer>
+
+<!-- ✅ Fixed Music Modal -->
+<div id="musicModal" class="music-modal" aria-hidden="true" style="display:none;">
+  <div class="music-content text-center bg-light p-4 rounded shadow">
+    <h3>Kannan's Flute Music</h3>
+    <audio id="fluteAudio" controls>
+      <source src="audio/flute-sample.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <br />
+    <button id="closeModal" class="btn btn-danger mt-3">Close ✕</button>
+  </div>
+</div>
+
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=Afb7ZzuwYAu5ONxetnRWN4F1_rgNBQh5NVtoF5Wtsow5YMWGPX4jVJIqO4YMQVy9WGRPWEg5vNqXC1xZ&currency=USD"></script>
+
+<!-- ✅ Bootstrap JS (needed for carousel to work) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JS -->
+<script>
+  // 🎵 Music Modal Integration with Fade-in
+  const musicBtn = document.getElementById('musicBtn');
+  const musicModal = document.getElementById('musicModal');
+  const closeModal = document.getElementById('closeModal');
+  const audioEl = musicModal.querySelector('audio');
+
+  musicBtn.addEventListener('click', () => {
+    musicModal.style.display = 'flex';
+    setTimeout(() => musicModal.classList.add('active'), 10);
+    musicModal.setAttribute("aria-hidden", "false");
+    audioEl.currentTime = 0;
+  });
+
+  closeModal.addEventListener('click', () => {
+    audioEl.pause();
+    musicModal.classList.remove('active');
+    musicModal.setAttribute("aria-hidden", "true");
+    setTimeout(() => (musicModal.style.display = 'none'), 400);
+  });
+
+  // 🌟 Fade-in Animation for sections
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.fadein');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
+    sections.forEach(section => observer.observe(section));
+  });
+</script>
+
+<!-- ✅ Fixed PayPal Integration (with amount validation) -->
+<script>
+paypal.Buttons({
+  style: {
+    shape: 'pill',
+    color: 'gold',
+    layout: 'vertical',
+    label: 'paypal'
+  },
+  createOrder: function(data, actions) {
+    const amount = document.getElementById('customAmt').value;
+    if (!amount || amount <= 0) {
+      alert("Please enter a valid amount before proceeding.");
+      throw new Error("Invalid amount");
+    }
+    return actions.order.create({
+      purchase_units: [{
+        amount: { value: amount },
+        description: 'Donation to Deepdarshan Sangeetha Vidhyalayam'
+      }]
+    });
+  },
+  onApprove: function(data, actions) {
+    return actions.order.capture().then(function(details) {
+      document.getElementById('status').innerHTML = `✅ Thank you, ${details.payer.name.given_name}! Donation successful.`;
+    });
+  },
+  onError: function(err) {
+    document.getElementById('status').innerHTML = `❌ Payment failed. Please try again.`;
+    console.error(err);
+  }
+}).render('#paypal-button-container');
+</script>
+
+</body>
+</html>
