@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="QCwhIaFyFneWr6B5maec5mvRUcHfcmDN2793uYvbDLQ" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Deepdarshan Sangeetha Vidhyalayam — Preserving Indian classical music through the art of flute." />
   <title>Deepdarshan Sangeetha Vidhyalayam</title>
@@ -99,7 +100,7 @@
   </div>
 </section>
 
-<!-- Donation Section -->
+<!-- ✅ Donation Section -->
 <section id="donate" class="fadein py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-4">Support the Deepdarshan Sangeetha Vidhyalayam</h2>
@@ -110,10 +111,33 @@
       <input id="customAmt" type="number" min="1" placeholder="Enter amount" />
     </div>
 
-    <div id="paypal-button-container" class="text-center"></div>
+    <div class="text-center">
+      <button id="chooseCurrencyBtn" class="btn btn-success">Donate Now 💛</button>
+    </div>
+
+    <div id="razorpay-container" class="text-center mt-3" style="display:none;">
+      <button id="razorpayBtn" class="btn btn-primary">Pay with Razorpay (INR)</button>
+    </div>
+
+    <div id="paypal-button-container" class="text-center mt-3" style="display:none;"></div>
+
     <div class="status text-center mt-3" id="status"></div>
   </div>
 </section>
+
+<!-- Currency Selection Modal -->
+<div class="modal fade" id="currencyModal" tabindex="-1" aria-labelledby="currencyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-4">
+      <h5 id="currencyModalLabel">Choose your donation type</h5>
+      <p>Select INR (for India) or Other (for international donors)</p>
+      <div class="mt-3">
+        <button id="inrBtn" class="btn btn-primary mx-2">INR 🇮🇳(Rs)</button>
+        <button id="otherBtn" class="btn btn-warning mx-2">Other </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Footer -->
 <footer class="bg-dark text-light py-4 mt-5">
@@ -148,12 +172,12 @@
 <!-- PayPal SDK -->
 <script src="https://www.paypal.com/sdk/js?client-id=Afb7ZzuwYAu5ONxetnRWN4F1_rgNBQh5NVtoF5Wtsow5YMWGPX4jVJIqO4YMQVy9WGRPWEg5vNqXC1xZ&currency=USD"></script>
 
-<!-- ✅ Bootstrap JS (needed for carousel to work) -->
+<!-- ✅ Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- JS -->
 <script>
-  // 🎵 Music Modal Integration with Fade-in
+  // 🎵 Music Modal
   const musicBtn = document.getElementById('musicBtn');
   const musicModal = document.getElementById('musicModal');
   const closeModal = document.getElementById('closeModal');
@@ -173,7 +197,7 @@
     setTimeout(() => (musicModal.style.display = 'none'), 400);
   });
 
-  // 🌟 Fade-in Animation for sections
+  // 🌟 Fade-in Animation
   document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.fadein');
     const observer = new IntersectionObserver(entries => {
@@ -183,40 +207,69 @@
     }, { threshold: 0.2 });
     sections.forEach(section => observer.observe(section));
   });
-</script>
 
-<!-- ✅ Fixed PayPal Integration (with amount validation) -->
-<script>
-paypal.Buttons({
-  style: {
-    shape: 'pill',
-    color: 'gold',
-    layout: 'vertical',
-    label: 'paypal'
-  },
-  createOrder: function(data, actions) {
+  // 💳 Donation Logic
+  const currencyModal = new bootstrap.Modal(document.getElementById('currencyModal'));
+  const chooseCurrencyBtn = document.getElementById('chooseCurrencyBtn');
+  const razorpayContainer = document.getElementById('razorpay-container');
+  const paypalContainer = document.getElementById('paypal-button-container');
+  const statusBox = document.getElementById('status');
+
+  chooseCurrencyBtn.addEventListener('click', () => {
     const amount = document.getElementById('customAmt').value;
     if (!amount || amount <= 0) {
       alert("Please enter a valid amount before proceeding.");
-      throw new Error("Invalid amount");
+      return;
     }
-    return actions.order.create({
-      purchase_units: [{
-        amount: { value: amount },
-        description: 'Donation to Deepdarshan Sangeetha Vidhyalayam'
-      }]
-    });
-  },
-  onApprove: function(data, actions) {
-    return actions.order.capture().then(function(details) {
-      document.getElementById('status').innerHTML = `✅ Thank you, ${details.payer.name.given_name}! Donation successful.`;
-    });
-  },
-  onError: function(err) {
-    document.getElementById('status').innerHTML = `❌ Payment failed. Please try again.`;
-    console.error(err);
-  }
-}).render('#paypal-button-container');
+    currencyModal.show();
+  });
+
+  // INR (Razorpay)
+  document.getElementById('inrBtn').addEventListener('click', () => {
+    currencyModal.hide();
+    paypalContainer.style.display = 'none';
+    razorpayContainer.style.display = 'block';
+  });
+
+  // Other (PayPal)
+  document.getElementById('otherBtn').addEventListener('click', () => {
+    currencyModal.hide();
+    razorpayContainer.style.display = 'none';
+    paypalContainer.style.display = 'block';
+
+    const amount = document.getElementById('customAmt').value;
+
+    paypal.Buttons({
+      style: {
+        shape: 'pill',
+        color: 'gold',
+        layout: 'vertical',
+        label: 'paypal'
+      },
+      createOrder: function (data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: { value: amount },
+            description: 'Donation to Deepdarshan Sangeetha Vidhyalayam'
+          }]
+        });
+      },
+      onApprove: function (data, actions) {
+        return actions.order.capture().then(function (details) {
+          statusBox.innerHTML = `✅ Thank you, ${details.payer.name.given_name}! Donation successful.`;
+        });
+      },
+      onError: function (err) {
+        statusBox.innerHTML = `❌ Payment failed. Please try again.`;
+        console.error(err);
+      }
+    }).render('#paypal-button-container');
+  });
+
+  // Razorpay Button (INR) – placeholder
+  document.getElementById('razorpayBtn').addEventListener('click', () => {
+    alert("Razorpay integration coming next! (INR Payments)");
+  });
 </script>
 
 </body>
