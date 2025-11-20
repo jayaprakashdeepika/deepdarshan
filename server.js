@@ -8,7 +8,7 @@ const path = require('path');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public')); // serves /public/*.html
+app.use(express.static('public'));
 
 // ✅ Razorpay setup (safe to skip if keys not added yet)
 let razorpay;
@@ -40,7 +40,7 @@ app.post('/create-razorpay-order', async (req, res) => {
     }
 
     const options = {
-      amount: Math.round(amount * 100), // ₹ → paise
+      amount: Math.round(amount * 100),
       currency: 'INR',
       receipt: `deepdarshan_donation_${Date.now()}`,
       notes: { purpose: 'Donation to Deepdarshan Sangeetha Vidhyalayam' }
@@ -140,25 +140,21 @@ async function generateAccessToken() {
   return data.access_token;
 }
 
-// =============================
-// ⭐ IMPORTANT NEW CODE BELOW ⭐
-// =============================
+// -----------------------------------------------------------
+// ✅ STATIC SITE FIX FOR RAZORPAY (Express 5 compatible)
+// -----------------------------------------------------------
 
 // Serve index.html for root
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Catch-all → lets /privacy.html, /terms.html, etc. work
-app.get('*', (req, res) => {
-  // If a static file exists, express.static already served it.
-  // This fallback ensures your frontend routes don't break.
+// Catch all other routes → load index.html
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// =============================
-// END NEW CODE
-// =============================
+// -----------------------------------------------------------
 
 // Start server
 const PORT = process.env.PORT || 3000;
