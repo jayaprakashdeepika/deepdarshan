@@ -3,11 +3,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const fetch = require('node-fetch');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('public')); // serves /public/*.html
 
 // ✅ Razorpay setup (safe to skip if keys not added yet)
 let razorpay;
@@ -139,11 +140,26 @@ async function generateAccessToken() {
   return data.access_token;
 }
 
-// ✅ Root route
+// =============================
+// ⭐ IMPORTANT NEW CODE BELOW ⭐
+// =============================
+
+// Serve index.html for root
 app.get('/', (req, res) => {
-  res.send('🎵 Deepdarshan backend (PayPal + Razorpay with custom amounts) is running!');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// ✅ Start server
+// Catch-all → lets /privacy.html, /terms.html, etc. work
+app.get('*', (req, res) => {
+  // If a static file exists, express.static already served it.
+  // This fallback ensures your frontend routes don't break.
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// =============================
+// END NEW CODE
+// =============================
+
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
