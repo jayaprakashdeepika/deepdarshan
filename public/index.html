@@ -38,7 +38,6 @@
   ]
 }
 </script>
-
 </head>
 
 <body>
@@ -57,7 +56,6 @@
         <li class="nav-item"><a class="nav-link" href="#works">Works</a></li>
         <li class="nav-item"><a class="nav-link" href="#gurukulam">Vidhyalayam</a></li>
         <li class="nav-item"><a class="nav-link" href="courses.html">Courses</a></li>
-
         <li class="nav-item"><a class="nav-link" href="#donate">Donate</a></li>
       </ul>
     </div>
@@ -102,39 +100,28 @@
 
 <!-- CTA Section (Guaranteed Visible) -->
 <div class="my-5 mx-auto" style="max-width: 850px;">
-
   <div class="p-5 text-center text-white rounded-4 shadow"
        style="background: linear-gradient(135deg, #00c6ff, #ffd000);">
-
     <h2 class="fw-bold mb-3" style="font-size: 2rem;">
       Start Your Musical Journey 🎶
     </h2>
-
     <p class="mb-4" style="font-size: 1.15rem;">
       Join our vibrant music community — book a free trial class or explore our courses.
     </p>
-
     <div class="d-flex justify-content-center gap-3 flex-wrap">
-
-      <!-- Free Trial Button -->
       <a href="enroll.html"
          class="btn btn-light fw-semibold px-4 py-2 rounded-3 shadow-sm"
          style="font-size: 1.1rem;">
         🎁 Book a Free Trial Class
       </a>
-
-      <!-- Explore Courses Button -->
       <a href="courses.html"
          class="btn btn-outline-light fw-semibold px-4 py-2 rounded-3"
          style="font-size: 1.1rem;">
         📘 Explore Courses
       </a>
-
     </div>
   </div>
 </div>
-
-
 
 <!-- Gurukulam Vision Section -->
 <section id="gurukulam" class="fadein py-5">
@@ -183,12 +170,7 @@
       <button id="chooseCurrencyBtn" class="btn btn-success">Donate Now 💛</button>
     </div>
 
-    <div id="razorpay-container" class="text-center mt-3" style="display:none;">
-      <button id="razorpayBtn" class="btn btn-primary">Pay with Razorpay (INR)</button>
-    </div>
-
     <div id="paypal-button-container" class="text-center mt-3" style="display:none;"></div>
-
     <div class="status text-center mt-3" id="status"></div>
   </div>
 </section>
@@ -279,7 +261,6 @@
   // 💳 Donation Logic
   const currencyModal = new bootstrap.Modal(document.getElementById('currencyModal'));
   const chooseCurrencyBtn = document.getElementById('chooseCurrencyBtn');
-  const razorpayContainer = document.getElementById('razorpay-container');
   const paypalContainer = document.getElementById('paypal-button-container');
   const statusBox = document.getElementById('status');
 
@@ -292,51 +273,30 @@
     currencyModal.show();
   });
 
-  // INR (Razorpay)
+  // INR (Removed Razorpay)
   document.getElementById('inrBtn').addEventListener('click', () => {
     currencyModal.hide();
-    paypalContainer.style.display = 'none';
-    razorpayContainer.style.display = 'block';
+    alert("Only PayPal donation is active right now.");
   });
 
   // Other (PayPal)
   document.getElementById('otherBtn').addEventListener('click', () => {
     currencyModal.hide();
-    razorpayContainer.style.display = 'none';
     paypalContainer.style.display = 'block';
-
     const amount = document.getElementById('customAmt').value;
-
     paypal.Buttons({
-      style: {
-        shape: 'pill',
-        color: 'gold',
-        layout: 'vertical',
-        label: 'paypal'
-      },
-      createOrder: function (data, actions) {
-        return actions.order.create({
-          purchase_units: [{
-            amount: { value: amount },
-            description: 'Donation to Deepdarshan Sangeetha Vidhyalayam'
-          }]
-        });
-      },
-      onApprove: function (data, actions) {
-        return actions.order.capture().then(function (details) {
-          statusBox.innerHTML = `✅ Thank you, ${details.payer.name.given_name}! Donation successful.`;
-        });
-      },
-      onError: function (err) {
+      style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'paypal' },
+      createOrder: (data, actions) => actions.order.create({
+        purchase_units: [{ amount: { value: amount }, description: 'Donation to Deepdarshan Sangeetha Vidhyalayam' }]
+      }),
+      onApprove: (data, actions) => actions.order.capture().then(details => {
+        statusBox.innerHTML = `✅ Thank you, ${details.payer.name.given_name}! Donation successful.`;
+      }),
+      onError: (err) => {
         statusBox.innerHTML = `❌ Payment failed. Please try again.`;
         console.error(err);
       }
     }).render('#paypal-button-container');
-  });
-
-  // Razorpay Button (INR) – placeholder
-  document.getElementById('razorpayBtn').addEventListener('click', () => {
-    alert("Razorpay integration coming next! (INR Payments)");
   });
 </script>
 

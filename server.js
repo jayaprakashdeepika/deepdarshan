@@ -10,50 +10,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-// ✅ Razorpay setup (safe to skip if keys not added yet)
-let razorpay;
-try {
-  if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_SECRET) {
-    const Razorpay = require('razorpay');
-    razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_SECRET
-    });
-    console.log("✅ Razorpay initialized");
-  } else {
-    console.warn("⚠️ Razorpay keys not found — skipping Razorpay setup");
-  }
-} catch (err) {
-  console.warn("⚠️ Razorpay not initialized:", err.message);
-}
-
-// ✅ Razorpay order creation (user chooses amount)
-app.post('/create-razorpay-order', async (req, res) => {
-  if (!razorpay) {
-    return res.status(400).json({ error: 'Razorpay not configured yet. Please add keys.' });
-  }
-
-  try {
-    const { amount } = req.body;
-    if (!amount || isNaN(amount) || amount <= 0) {
-      return res.status(400).json({ error: 'Please provide a valid amount in INR.' });
-    }
-
-    const options = {
-      amount: Math.round(amount * 100),
-      currency: 'INR',
-      receipt: `deepdarshan_donation_${Date.now()}`,
-      notes: { purpose: 'Donation to Deepdarshan Sangeetha Vidhyalayam' }
-    };
-
-    const order = await razorpay.orders.create(options);
-    res.json(order);
-  } catch (err) {
-    console.error('❌ Error creating Razorpay order:', err);
-    res.status(500).json({ error: 'Razorpay order creation failed' });
-  }
-});
-
 // ✅ PayPal order creation (user chooses amount)
 app.post('/create-paypal-order', async (req, res) => {
   const { amount } = req.body;
@@ -82,7 +38,9 @@ app.post('/create-paypal-order', async (req, res) => {
             description: 'Donation to Deepdarshan Sangeetha Vidhyalayam'
           }
         ],
-        application_context: { shipping_preference: 'NO_SHIPPING' }
+        application_context: { 
+          shipping_preference: 'NO_SHIPPING' // ✅ Prevent PayPal from asking shipping address
+        }
       })
     });
 
@@ -141,25 +99,22 @@ async function generateAccessToken() {
 }
 
 // -----------------------------------------------------------
-// ✅ STATIC SITE FIX FOR RAZORPAY (Express 5 compatible)
+// Serve static pages
 // -----------------------------------------------------------
 
-// Serve index.html for root
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Catch all other routes → load index.html
 // Serve real HTML files normally
-app.get('/*.html', (req, res) => {
+app.get(/^\/.+\.html$/, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', req.path));
 });
 
-// Fallback for all other routes → index.html
+// Fallback → index.html
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
 
 // -----------------------------------------------------------
 
