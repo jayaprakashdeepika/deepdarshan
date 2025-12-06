@@ -150,9 +150,16 @@ app.get('/', (req, res) => {
 });
 
 // Catch all other routes → load index.html
+// Serve real HTML files normally
+app.get('/*.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', req.path));
+});
+
+// Fallback for all other routes → index.html
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
 
 // -----------------------------------------------------------
 
