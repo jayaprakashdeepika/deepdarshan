@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const fetch = require('node-fetch');
+const crypto = require('crypto');
 const path = require('path');
 
 const app = express();
@@ -10,6 +11,68 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+// ----------------- PhonePe Payment -----------------
+app.get('/create-phonepe-payment', async (req, res) => {
+  const { amount } = req.query;
+
+  if (!amount || isNaN(amount) || amount <= 0) {
+    return res.status(400).json({ error: "Invalid amount" });
+  }
+
+  const merchantId = process.env.PHONEPE_MERCHANT_ID;
+  const merchantTransactionId = `txn_${Date.now()}`;
+  const redirectUrl = process.env.PHONEPE_REDIRECT_URL;
+
+  const payload = {
+    merchantId,
+    merchantTransactionId,
+    amount: parseInt(amount) * 100, // paise
+    redirectUrl
+  };
+
+  // Create PhonePe signature
+  const dataString = JSON.stringify(payload);
+  const signature = crypto.createHmac('sha256', process.env.PHONEPE_SECRET_KEY)
+                        .update(JSON.stringify(payload))
+                        .digest('hex');
+
+
+  try {
+    // Sandbox URL: use live URL for production
+  const response = await fetch('https://api-preprod.phonepe.com/apis/hermes/pg/v1/payment/request', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-VERIFY': signature
+  },
+  body: dataString
+});
+
+
+    const data = await response.json();
+    if (data.success && data.data && data.data.paymentUrl) {
+      res.json({ url: data.data.paymentUrl });
+    } else {
+      console.error("PhonePe API Error:", data);
+      res.status(500).json({ error: "PhonePe API error", details: data });
+    }
+
+  } catch (err) {
+    console.error("Server error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// ----------------- PhonePe Callback -----------------
+app.post('/phonepe-callback', async (req, res) => {
+  const body = req.body;
+
+  // TODO: verify signature here for live use
+  console.log("PhonePe Callback Data:", body);
+  res.sendStatus(200); // acknowledge
+});
+
+// ----------------- PayPal Integration -----------------
 // ✅ PayPal order creation (user chooses amount)
 app.post('/create-paypal-order', async (req, res) => {
   const { amount } = req.body;
@@ -38,9 +101,7 @@ app.post('/create-paypal-order', async (req, res) => {
             description: 'Donation to Deepdarshan Sangeetha Vidhyalayam'
           }
         ],
-        application_context: { 
-          shipping_preference: 'NO_SHIPPING' // ✅ Prevent PayPal from asking shipping address
-        }
+        application_context: { shipping_preference: 'NO_SHIPPING' }
       })
     });
 
@@ -98,26 +159,19 @@ async function generateAccessToken() {
   return data.access_token;
 }
 
-// -----------------------------------------------------------
-// Serve static pages
-// -----------------------------------------------------------
-
+// ----------------- Serve static pages -----------------
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Serve real HTML files normally
 app.get(/^\/.+\.html$/, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', req.path));
 });
 
-// Fallback → index.html
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// -----------------------------------------------------------
-
-// Start server
+// ----------------- Start Server -----------------
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));

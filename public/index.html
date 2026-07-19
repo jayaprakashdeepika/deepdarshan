@@ -6,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Deepdarshan Sangeetha Vidhyalayam - Learn Carnatic flute from Kannan Jayaprakash. Music classes, online courses, performances, compositions and more.">
   <meta name="keywords" content="Deepdarshan, deepdarshan music, deepdarshan school, Kannan Jayaprakash, flute teacher, carnatic flute, music classes, carnatic music, sangeetha vidhyalayam, online music classes">
-  <meta name="keywords" content="Deepdarshan, deepdarshan music, deepdarshan school, Kannan Jayaprakash, flute teacher, carnatic flute, music classes, carnatic music, sangeetha vidhyalayam, online music classes">
-  <meta name="keywords" content="flute classes, carnatic flute classes, flute teacher, coimbatore flute classes, online flute class, flute music, deep darshan, deepdarshan, deepdarshan sangeetha vidhyalayam, kannan jayaprakash">
-  <meta name="keywords" content="flute classes, carnatic flute classes, flute teacher, coimbatore flute classes, online flute class, flute music, deep darshan, deepdarshan, deepdarshan sangeetha vidhyalayam, kannan jayaprakash">
   <title>Deepdarshan — Kannan Jayaprakash | Flute Classes & Flute Teacher in Coimbatore</title>
+  <link rel="canonical" href="https://deepdarshansangeethavidhyalaya.onrender.com/">
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <!-- Bootstrap CSS -->
@@ -98,7 +96,7 @@
   </div>
 </section>
 
-<!-- CTA Section (Guaranteed Visible) -->
+<!-- CTA Section -->
 <div class="my-5 mx-auto" style="max-width: 850px;">
   <div class="p-5 text-center text-white rounded-4 shadow"
        style="background: linear-gradient(135deg, #00c6ff, #ffd000);">
@@ -123,13 +121,11 @@
   </div>
 </div>
 
-<!-- Gurukulam Vision Section -->
+<!-- Gurukulam Section -->
 <section id="gurukulam" class="fadein py-5">
   <div class="container">
     <h2 class="text-center mb-4">The Sangeetha Vidhyalayam Vision</h2>
     <p>We aim to create a vibrant and inclusive space where students can master the art of music — both vocal and instrumental — blending traditional values with creative modern methods.</p>
-
-    <!-- ✅ Updated Gurukulam Carousel -->
     <div id="gurukulamCarousel" class="carousel slide carousel-fade my-4" data-bs-ride="carousel" data-bs-interval="2500">
       <div class="carousel-inner">
         <div class="carousel-item active"><img src="images/gurukulam1.jpg" class="d-block w-100" alt="Gurukulam 1"></div>
@@ -145,7 +141,6 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-
     <h3>Your Support Enables</h3>
     <ul>
       <li>Building classrooms & practice halls</li>
@@ -155,27 +150,24 @@
   </div>
 </section>
 
-<!-- ✅ Donation Section -->
+<!-- Donation Section -->
 <section id="donate" class="fadein py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-4">Support the Deepdarshan Sangeetha Vidhyalayam</h2>
     <p class="text-center">Your donation helps preserve Indian classical music and train the next generation of artists.</p>
-
     <div class="text-center mb-3">
       <label for="customAmt">Custom amount (₹): </label>
       <input id="customAmt" type="number" min="1" placeholder="Enter amount" />
     </div>
-
     <div class="text-center">
       <button id="chooseCurrencyBtn" class="btn btn-success">Donate Now 💛</button>
     </div>
-
     <div id="paypal-button-container" class="text-center mt-3" style="display:none;"></div>
     <div class="status text-center mt-3" id="status"></div>
   </div>
 </section>
 
-<!-- Currency Selection Modal -->
+<!-- Currency Modal -->
 <div class="modal fade" id="currencyModal" tabindex="-1" aria-labelledby="currencyModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content text-center p-4">
@@ -192,7 +184,7 @@
 <!-- Footer -->
 <footer id="contact" class="bg-dark text-light py-4 mt-5">
   <div class="container text-center">
-    <p>&copy; 2025 Deepdarshan Vidhyalayam Mandhir. All rights reserved.</p>
+    <p>&copy; 2025 Deepdarshan sangeetha Vidhyalayam . All rights reserved.</p>
     <p>
       Contact: 
       <a href="mailto:deepdarshansangeethavidhyalaya@gmail.com" class="text-light">deepdarshansangeethavidhyalaya@gmail.com</a> |
@@ -206,7 +198,7 @@
   </div>
 </footer>
 
-<!-- ✅ Fixed Music Modal -->
+<!-- Music Modal -->
 <div id="musicModal" class="music-modal" aria-hidden="true" style="display:none;">
   <div class="music-content text-center bg-light p-4 rounded shadow">
     <h3>Kannan's Flute Music</h3>
@@ -221,13 +213,9 @@
 
 <!-- PayPal SDK -->
 <script src="https://www.paypal.com/sdk/js?client-id=Afb7ZzuwYAu5ONxetnRWN4F1_rgNBQh5NVtoF5Wtsow5YMWGPX4jVJIqO4YMQVy9WGRPWEg5vNqXC1xZ&currency=USD"></script>
-
-<!-- ✅ Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- JS -->
 <script>
-  // 🎵 Music Modal
   const musicBtn = document.getElementById('musicBtn');
   const musicModal = document.getElementById('musicModal');
   const closeModal = document.getElementById('closeModal');
@@ -247,7 +235,6 @@
     setTimeout(() => (musicModal.style.display = 'none'), 400);
   });
 
-  // 🌟 Fade-in Animation
   document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.fadein');
     const observer = new IntersectionObserver(entries => {
@@ -258,7 +245,6 @@
     sections.forEach(section => observer.observe(section));
   });
 
-  // 💳 Donation Logic
   const currencyModal = new bootstrap.Modal(document.getElementById('currencyModal'));
   const chooseCurrencyBtn = document.getElementById('chooseCurrencyBtn');
   const paypalContainer = document.getElementById('paypal-button-container');
@@ -273,13 +259,30 @@
     currencyModal.show();
   });
 
-  // INR (Removed Razorpay)
-  document.getElementById('inrBtn').addEventListener('click', () => {
+  // INR (PhonePe)
+  document.getElementById('inrBtn').addEventListener('click', async () => {
+    const amount = document.getElementById('customAmt').value;
+    if (!amount || amount <= 0) {
+      alert("Enter a valid amount.");
+      return;
+    }
     currencyModal.hide();
-    alert("Only PayPal donation is active right now.");
+    statusBox.innerHTML = "Redirecting to PhonePe...";
+    try {
+      const res = await fetch(`/create-phonepe-payment?amount=${amount}`);
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url; // redirect user to PhonePe
+      } else {
+        statusBox.innerHTML = "❌ Error initiating PhonePe payment.";
+      }
+    } catch (err) {
+      console.error(err);
+      statusBox.innerHTML = "❌ Server error initiating PhonePe payment.";
+    }
   });
 
-  // Other (PayPal)
+  // PayPal
   document.getElementById('otherBtn').addEventListener('click', () => {
     currencyModal.hide();
     paypalContainer.style.display = 'block';
@@ -299,6 +302,5 @@
     }).render('#paypal-button-container');
   });
 </script>
-
 </body>
 </html>
