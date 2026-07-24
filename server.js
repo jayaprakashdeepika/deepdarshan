@@ -10,6 +10,16 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
+// Redirect Render URL to the custom domain
+app.use((req, res, next) => {
+  const host = req.get('host');
+
+  if (host && host.includes('deepdarshansangeethavidhyalaya.onrender.com')) {
+    return res.redirect(301, `https://deepdarshansangeethavidhyalayam.com${req.originalUrl}`);
+  }
+
+  next();
+});
 
 // ----------------- PhonePe Payment -----------------
 app.get('/create-phonepe-payment', async (req, res) => {
